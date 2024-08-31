@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API\Vet;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -12,7 +13,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $user = User::latest()->get();
+            $data = [
+                'success' => true,
+                'data' => $user,
+            ];
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 
     /**
