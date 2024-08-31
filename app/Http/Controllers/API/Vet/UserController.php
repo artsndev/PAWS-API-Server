@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers\API\Vet;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Authorizes the users account in api.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     */
-    public function auth(Request $request)
-    {
-        return $request->user();
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try {
+            $user = User::latest()->get();
+            $data = [
+                'success' => true,
+                'data' => $user,
+            ];
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 
     /**
