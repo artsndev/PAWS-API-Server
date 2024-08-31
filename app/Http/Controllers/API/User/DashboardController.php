@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+
+    /**
+     * Authorizes the users account in api.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function auth(Request $request)
+    {
+        return $request->user();
+    }
+
     /**
      * Display a listing of the resource.
      */

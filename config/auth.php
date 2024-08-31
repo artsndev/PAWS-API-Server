@@ -40,6 +40,20 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'user-api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+        'veterinarian' => [
+            'driver' => 'session',
+            'provider' => 'veterinarians',
+        ],
+        'vet-api' => [
+            'driver' => 'jwt',
+            'provider' => 'veterinarians',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -63,6 +77,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'veterinarians' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Veterinarian::class,
         ],
 
         // 'users' => [
@@ -94,6 +112,12 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'veterinarians' => [
+            'provider' => 'veterinarian',
+            'table' =>  env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
