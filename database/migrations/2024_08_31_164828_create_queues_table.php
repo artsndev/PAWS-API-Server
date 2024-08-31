@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('veterinarian_id')->constrained('veterinarians')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('pet_id')->constrained('pets')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('appointment_id')->constrained('appointments')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('status')->default('pending');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

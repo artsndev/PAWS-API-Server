@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('veterinarian_id')->constrained('veterinarians')->onDelete('cascade');
+            $table->dateTime('schedule_time');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
