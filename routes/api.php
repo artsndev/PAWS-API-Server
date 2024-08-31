@@ -16,6 +16,7 @@ Route::controller(UnauthenticatedController::class)->group(function () {
 
 use App\Http\Controllers\API\Vet\Auth\LoginController as VetLoginController;
 use App\Http\Controllers\API\Vet\Auth\RegisterController as VetRegisterController;
+use App\Http\Controllers\API\Vet\DashboardController as VetDashboardController;
 
 // Vet Login Route
 Route::controller(VetLoginController::class)->group(function () {
@@ -28,4 +29,8 @@ Route::controller(VetRegisterController::class)->group(function () {
 
 // Middleware Route API for Veterinarian.
 Route::middleware(['auth:vet-api'])->group(function () {
+    // Veterinarian Data Route
+    Route::controller(VetDashboardController::class)->group(function () {
+        Route::get('/vet/data', 'auth');
+    });
 });
