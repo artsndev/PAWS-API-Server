@@ -15,7 +15,19 @@ class PetController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $pet = Pet::where('user_id', Auth::user()->id)->latest()->get();
+            $response = [
+                'data' => $pet,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**

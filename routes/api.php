@@ -76,6 +76,7 @@ Route::middleware(['auth:user-api'])->group(function () {
     });
     // Pet Data Route
     Route::controller(UserPetController::class)->group(function () {
-        Route::post('/user/pet', 'index');
+        Route::get('/user/pet', 'index');
+        Route::post('/user/pet', 'store');
     });
 });
