@@ -31,4 +31,34 @@ class Queue extends Model
     protected $dates = [
         'deleted_at',
     ];
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function veterinarian()
+    {
+        return $this->belongsTo(Veterinarian::class,'veterinarian_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class,'appointment_id');
+    }
 }

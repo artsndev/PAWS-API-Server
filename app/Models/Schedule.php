@@ -29,4 +29,23 @@ class Schedule extends Model
         'deleted_at',
     ];
 
+    /**
+     *
+     * Define the relationship between Doctor and Schedule models.
+     *
+     */
+    public function veterinarian()
+    {
+        return $this->belongsTo(Veterinarian::class,'veterinarian_id');
+    }
+
+    /**
+     *
+     * Define the relationship between Doctor and Schedule models.
+     *
+     */
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class,'schedule_id');
+    }
 }

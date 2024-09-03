@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('veterinarians', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -29,6 +29,14 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('schedules', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('veterinarian_id')->constrained('veterinarians')->onDelete('cascade');
+            $table->dateTime('schedule_time');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -38,5 +46,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('veterinarians');
         Schema::dropIfExists('veterinarian_sessions');
+        Schema::dropIfExists('schedules');
     }
 };

@@ -65,4 +65,24 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function pet()
+    {
+        return $this->hasMany(Pet::class,'user_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function appointment()
+    {
+        return $this->hasMany(Appointment::class,'user_id');
+    }
 }

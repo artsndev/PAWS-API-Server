@@ -17,6 +17,9 @@ Route::controller(UnauthenticatedController::class)->group(function () {
 use App\Http\Controllers\API\Vet\Auth\LoginController as VetLoginController;
 use App\Http\Controllers\API\Vet\Auth\RegisterController as VetRegisterController;
 use App\Http\Controllers\API\Vet\DashboardController as VetDashboardController;
+use App\Http\Controllers\API\Vet\UserController as VetUserController;
+use App\Http\Controllers\API\Vet\Auth\LogoutController as VetLogoutController;
+
 
 // Vet Login Route
 Route::controller(VetLoginController::class)->group(function () {
@@ -32,5 +35,63 @@ Route::middleware(['auth:vet-api'])->group(function () {
     // Veterinarian Data Route
     Route::controller(VetDashboardController::class)->group(function () {
         Route::get('/vet/data', 'auth');
+    });
+    // User Data Route
+    Route::controller(VetUserController::class)->group(function () {
+        Route::get('/vet/user', 'index');
+        Route::put('/vet/user/{id}', 'update');
+        Route::delete('/vet/user/{id}', 'destroy');
+    });
+    // Logout Route
+    Route::controller(VetLogoutController::class)->group(function () {
+        Route::post('/vet/logout', 'logout');
+    });
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| API Routes for User
+|--------------------------------------------------------------------------
+*/
+
+use App\Http\Controllers\API\User\Auth\LoginController as UserLoginController;
+use App\Http\Controllers\API\User\Auth\RegisterController as UserRegisterController;
+use App\Http\Controllers\API\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\API\User\PetController as UserPetController;
+use App\Http\Controllers\API\User\AppointmentController as UserAppointmentController;
+use App\Http\Controllers\API\User\Auth\LogoutController as UserLogoutController;
+
+
+// User Login Route
+Route::controller(UserLoginController::class)->group(function () {
+    Route::post('/user/login', 'login');
+});
+// User Register Route
+Route::controller(UserRegisterController::class)->group(function () {
+    Route::post('/user/register', 'register');
+});
+
+// Middleware Route API for User.
+Route::middleware(['auth:user-api'])->group(function () {
+    // User Data Route
+    Route::controller(UserDashboardController::class)->group(function () {
+        Route::get('/user/data', 'auth');
+    });
+    // Pet Data Route
+    Route::controller(UserPetController::class)->group(function () {
+        Route::get('/user/pet', 'index');
+        Route::post('/user/pet', 'store');
+        Route::get('/user/pet/{id}', 'show');
+    });
+    // Appointment Data Route
+    Route::controller(UserAppointmentController::class)->group(function () {
+        Route::get('/user/appointment', 'index');
+        Route::post('/user/appointment', 'store');
+        Route::get('/user/appointment/{id}', 'show');
+    });
+    // Logout Route
+    Route::controller(UserLogoutController::class)->group(function () {
+        Route::post('/user/logout', 'logout');
     });
 });
