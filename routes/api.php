@@ -56,6 +56,8 @@ Route::middleware(['auth:vet-api'])->group(function () {
 use App\Http\Controllers\API\User\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\API\User\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\API\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\API\User\PetController as UserPetController;
+
 
 // User Login Route
 Route::controller(UserLoginController::class)->group(function () {
@@ -66,10 +68,14 @@ Route::controller(UserRegisterController::class)->group(function () {
     Route::post('/user/register', 'register');
 });
 
-// Middleware Route API for Usererinarian.
+// Middleware Route API for User.
 Route::middleware(['auth:user-api'])->group(function () {
-    // Usererinarian Data Route
+    // User Data Route
     Route::controller(UserDashboardController::class)->group(function () {
         Route::get('/user/data', 'auth');
+    });
+    // Pet Data Route
+    Route::controller(UserPetController::class)->group(function () {
+        Route::post('/user/pet', 'index');
     });
 });
