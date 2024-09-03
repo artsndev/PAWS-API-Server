@@ -82,7 +82,27 @@ class PetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $pet = Pet::find($id);
+            if (!$pet) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Pet Not Found'
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'message' => 'Pets Found',
+                'data' => $pet,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 
     /**

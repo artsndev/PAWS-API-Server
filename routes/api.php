@@ -39,6 +39,8 @@ Route::middleware(['auth:vet-api'])->group(function () {
     // User Data Route
     Route::controller(VetUserController::class)->group(function () {
         Route::get('/vet/user', 'index');
+        Route::put('/vet/user/{id}', 'update');
+        Route::delete('/vet/user/{id}', 'destroy');
     });
     // Logout Route
     Route::controller(VetLogoutController::class)->group(function () {
@@ -57,6 +59,8 @@ use App\Http\Controllers\API\User\Auth\LoginController as UserLoginController;
 use App\Http\Controllers\API\User\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\API\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\API\User\PetController as UserPetController;
+use App\Http\Controllers\API\User\AppointmentController as UserAppointmentController;
+use App\Http\Controllers\API\User\Auth\LogoutController as UserLogoutController;
 
 
 // User Login Route
@@ -78,5 +82,16 @@ Route::middleware(['auth:user-api'])->group(function () {
     Route::controller(UserPetController::class)->group(function () {
         Route::get('/user/pet', 'index');
         Route::post('/user/pet', 'store');
+        Route::get('/user/pet/{id}', 'show');
+    });
+    // Appointment Data Route
+    Route::controller(UserAppointmentController::class)->group(function () {
+        Route::get('/user/appointment', 'index');
+        Route::post('/user/appointment', 'store');
+        Route::get('/user/appointment/{id}', 'show');
+    });
+    // Logout Route
+    Route::controller(UserLogoutController::class)->group(function () {
+        Route::post('/user/logout', 'logout');
     });
 });

@@ -16,7 +16,27 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $appointment = Appointment::with('user')->withTrashed()->where('user_id', Auth::user()->id)->latest()->get();
+            if(!$appointment) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Not Found',
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'data' => $appointment,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**
