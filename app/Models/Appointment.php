@@ -34,4 +34,15 @@ class Appointment extends Model
     protected $dates = [
         'deleted_at',
     ];
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 }
