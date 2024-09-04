@@ -45,4 +45,33 @@ class Appointment extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function veterinarian()
+    {
+        return $this->belongsTo(Veterinarian::class,'veterinarian_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class,'schedule_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function queue()
+    {
+        return $this->hasOne(Queue::class,'appointment_id');
+    }
 }
