@@ -16,7 +16,7 @@ class Schedule extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'doctor_id',
+        'veterinarian_id',
         'schedule_time',
     ];
 
