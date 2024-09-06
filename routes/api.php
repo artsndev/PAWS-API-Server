@@ -17,6 +17,7 @@ Route::controller(UnauthenticatedController::class)->group(function () {
 use App\Http\Controllers\API\Vet\Auth\LoginController as VetLoginController;
 use App\Http\Controllers\API\Vet\Auth\RegisterController as VetRegisterController;
 use App\Http\Controllers\API\Vet\DashboardController as VetDashboardController;
+use App\Http\Controllers\API\Vet\ScheduleController as VetScheduleController;
 use App\Http\Controllers\API\Vet\UserController as VetUserController;
 use App\Http\Controllers\API\Vet\Auth\LogoutController as VetLogoutController;
 
@@ -35,6 +36,11 @@ Route::middleware(['auth:vet-api'])->group(function () {
     // Veterinarian Data Route
     Route::controller(VetDashboardController::class)->group(function () {
         Route::get('/vet/data', 'auth');
+    });
+    // Veterinarian Data Route
+    Route::controller(VetScheduleController::class)->group(function () {
+        Route::get('/vet/schedule', 'index');
+        Route::post('/vet/schedule', 'store');
     });
     // User Data Route
     Route::controller(VetUserController::class)->group(function () {

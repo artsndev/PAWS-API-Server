@@ -16,7 +16,7 @@ class ScheduleController extends Controller
     public function index()
     {
         try {
-            $schedule = Schedule::with('doctor')->withTrashed()->where('doctor_id', Auth::user()->id)->latest()->get();
+            $schedule = Schedule::withTrashed()->where('veterinarian_id', Auth::user()->id)->latest()->get();
             $data = [
                 'success' => true,
                 'data' => $schedule,
@@ -42,8 +42,8 @@ class ScheduleController extends Controller
             $validator = Validator::make($request->all(), [
                 'schedule_time' => [
                     'required','date_format:Y-m-d H:i', function ($attribute, $value, $fail) use ($request) {
-                        $doctor_id = Auth::user()->id;
-                        $existingSchedule = Schedule::where('schedule_time', $value)->where('doctor_id', $doctor_id)->first();
+                        $veterinarian_id = Auth::user()->id;
+                        $existingSchedule = Schedule::where('schedule_time', $value)->where('veterinarian_id', $veterinarian_id)->first();
                         if ($existingSchedule) {
                             $fail('You\'ve already selected this schedule time. Try another time.');
                         }
