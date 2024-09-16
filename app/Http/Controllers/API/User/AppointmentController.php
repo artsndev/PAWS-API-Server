@@ -2,15 +2,73 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Models\Pet;
 use App\Models\Schedule;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Veterinarian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
+    /**
+     * Display a all my pets for appointment form.
+     */
+    public function pet()
+    {
+        try {
+            $pet = Pet::where('user_id', Auth::user()->id)->latest()->get();
+            if(!$pet) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Not Found',
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'data' => $pet,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    /**
+     * Display a all the veterinarians for appointment form.
+     */
+    public function vet()
+    {
+        try {
+            $vet = Veterinarian::with('schedule')->latest()->get();
+            if(!$vet) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Not Found',
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'data' => $vet,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
