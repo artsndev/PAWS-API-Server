@@ -17,10 +17,7 @@ return new class extends Migration
             $table->foreignId('veterinarian_id')->constrained('veterinarians')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('pet_id')->constrained('pets')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('schedule_id')->constrained('schedules')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('status')->default('pending')->nullable();
             $table->text('purpose_of_appointment');
-            $table->string('session_of_appointment');
-            $table->dateTime('appointment_time');
             $table->softDeletes();
             $table->timestamps();
         });

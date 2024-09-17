@@ -2,22 +2,52 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Models\Pet;
 use App\Models\Schedule;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Veterinarian;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
     /**
+     * Display a all the veterinarians for appointment form.
+     */
+    public function vet()
+    {
+        try {
+            $vet = Veterinarian::with('schedule')->latest()->get();
+            if(!$vet) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Not Found',
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'data' => $vet,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         try {
-            $appointment = Appointment::with('user')->withTrashed()->where('user_id', Auth::user()->id)->latest()->get();
+            $appointment = Appointment::with('veterinarian','schedule')->withTrashed()->where('user_id', Auth::user()->id)->latest()->get();
             if(!$appointment) {
                 $response = [
                     'success' => false,
@@ -46,9 +76,11 @@ class AppointmentController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
+                'schedule_id' => 'required|unique:appointments,schedule_id',
                 'purpose_of_appointment' => 'required',
-                'session_of_appointment' => 'required',
-                'appointment_time' => 'required|date_format:Y-m-d H:i|unique:appointments,appointment_time',
+            ], [
+                'schedule_id.required' => 'This field is required. Please select a schedule first.',
+                'schedule_id.unique' => 'This schedule is already taken. Please select other.',
             ]);
             if ($validator->fails()) {
                 $response = [
@@ -64,9 +96,6 @@ class AppointmentController extends Controller
                 'pet_id' => $request->input('pet_id'),
                 'schedule_id' => $request->input('schedule_id'),
                 'purpose_of_appointment' => $request->input('purpose_of_appointment'),
-                'session_of_appointment' => $request->input('session_of_appointment'),
-                'status' => $request->input('status'),
-                'appointment_time' => $request->input('appointment_time')
             ]);
             $schedule = Schedule::findOrFail($request->input('schedule_id'));
             if (!$schedule) {

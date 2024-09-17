@@ -21,9 +21,6 @@ class Appointment extends Model
         'pet_id',
         'schedule_id',
         'purpose_of_appointment',
-        'session_of_appointment',
-        'appointment_time',
-        'status',
     ];
 
     /**

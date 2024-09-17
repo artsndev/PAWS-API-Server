@@ -92,6 +92,8 @@ Route::middleware(['auth:user-api'])->group(function () {
     });
     // Appointment Data Route
     Route::controller(UserAppointmentController::class)->group(function () {
+        Route::get('/user/appointment/pet', 'pet');
+        Route::get('/user/appointment/vet', 'vet');
         Route::get('/user/appointment', 'index');
         Route::post('/user/appointment', 'store');
         Route::get('/user/appointment/{id}', 'show');
