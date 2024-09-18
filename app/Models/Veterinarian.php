@@ -74,4 +74,14 @@ class Veterinarian extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Schedule::class,'veterinarian_id');
     }
+
+    /**
+     *
+     * Define the relationship between Doctor and Schedule models.
+     *
+     */
+    public function result()
+    {
+        return $this->hasMany(Result::class,'veterinarian_id');
+    }
 }

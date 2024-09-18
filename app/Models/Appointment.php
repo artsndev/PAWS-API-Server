@@ -81,4 +81,14 @@ class Appointment extends Model
     {
         return $this->hasOne(Queue::class,'appointment_id');
     }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function result()
+    {
+        return $this->hasMany(Result::class,'appointment_id');
+    }
 }
