@@ -21,6 +21,7 @@ class AppointmentController extends Controller
                 },
                 'user',
                 'pet',
+                'result'
             ])->withTrashed()->where('veterinarian_id', Auth::user()->id)->latest()->get();
             if(!$appointment) {
                 $response = [

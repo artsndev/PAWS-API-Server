@@ -19,6 +19,7 @@ use App\Http\Controllers\API\Vet\Auth\RegisterController as VetRegisterControlle
 use App\Http\Controllers\API\Vet\DashboardController as VetDashboardController;
 use App\Http\Controllers\API\Vet\ScheduleController as VetScheduleController;
 use App\Http\Controllers\API\Vet\AppointmentController as VetAppointmentController;
+use App\Http\Controllers\API\Vet\ResultController as VetResultController;
 use App\Http\Controllers\API\Vet\UserController as VetUserController;
 use App\Http\Controllers\API\Vet\Auth\LogoutController as VetLogoutController;
 
@@ -47,6 +48,11 @@ Route::middleware(['auth:vet-api'])->group(function () {
     Route::controller(VetAppointmentController::class)->group(function () {
         Route::get('/vet/appointment', 'index');
         // Route::post('/vet/schedule', 'store');
+    });
+    // Veterinarian Data Route
+    Route::controller(VetResultController::class)->group(function () {
+        Route::get('/vet/result', 'index');
+        Route::post('/vet/result', 'store');
     });
     // User Data Route
     Route::controller(VetUserController::class)->group(function () {
