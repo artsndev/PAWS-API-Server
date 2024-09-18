@@ -34,4 +34,14 @@ class Pet extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function appointment()
+    {
+        return $this->hasMany(Appointment::class,'pet_id');
+    }
+
 }

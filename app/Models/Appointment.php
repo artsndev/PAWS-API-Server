@@ -57,9 +57,19 @@ class Appointment extends Model
      * Define the relationship between User and Appointment models.
      *
      */
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class,'pet_id');
+    }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
     public function schedule()
     {
-        return $this->hasMany(Schedule::class,'schedule_id');
+        return $this->belongsTo(Schedule::class,'schedule_id');
     }
 
     /**
