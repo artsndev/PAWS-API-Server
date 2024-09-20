@@ -331,6 +331,7 @@
                                             <p class="" style="font-size: 16px;">{{ __('Your appointment request is now Queued Successfully.') }}</p>
                                             {{-- <h1 class="text-center">{{ $client->queuing_number }} </h1> --}}
                                             <p>{{ __('Thank you for using PAWSSIBLE Solutions Mobile app. 🚀') }}</p>
+
                                         </table>
                                         <table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                                             <tr>
