@@ -52,9 +52,10 @@ class QueuingController extends Controller
                 ], 404);
             }
             $queue = Queue::create([
-                'doctor_id' => Auth::user()->id,
+                'veterinarian_id' => Auth::user()->id,
                 'appointment_id' => $request->input('appointment_id'),
-                'user_id' => $request->input('user_id')
+                'user_id' => $request->input('user_id'),
+                'pet_id' => $request->input('pet_id')
             ]);
             $appointment->delete();
             $response = [
