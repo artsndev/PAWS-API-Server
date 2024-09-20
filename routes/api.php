@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Vet\ScheduleController as VetScheduleController;
 use App\Http\Controllers\API\Vet\AppointmentController as VetAppointmentController;
 use App\Http\Controllers\API\Vet\ResultController as VetResultController;
 use App\Http\Controllers\API\Vet\UserController as VetUserController;
+use App\Http\Controllers\API\Vet\QueuingController as VetQueuingController;
 use App\Http\Controllers\API\Vet\Auth\LogoutController as VetLogoutController;
 use App\Http\Controllers\API\Vet\PDFController as VetPDFController;
 
@@ -63,6 +64,12 @@ Route::middleware(['auth:vet-api'])->group(function () {
         Route::get('/vet/user', 'index');
         Route::put('/vet/user/{id}', 'update');
         Route::delete('/vet/user/{id}', 'destroy');
+    });
+    // Doctor Queuing Controller
+    Route::controller(VetQueuingController::class)->group(function () {
+        Route::get('/vet/queue', 'index');
+        Route::post('/vet/queue', 'store');
+        Route::delete('/vet/queue/{id}', 'destroy');
     });
     // Logout Route
     Route::controller(VetLogoutController::class)->group(function () {
