@@ -21,9 +21,11 @@ class QueuingController extends Controller
         try {
             $queue = Queue::with([
                 'user',
+                'pet',
                 'appointment' => function ($query) {
                     $query->withTrashed();
-                }
+                },
+                'appointment.result'
             ])->withTrashed()->latest()->get();
             $response = [
                 'success' => true,

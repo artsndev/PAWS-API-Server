@@ -3,10 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UnauthenticatedController;
+use App\Http\Controllers\CreditController as Credit;
 
 Route::controller(UnauthenticatedController::class)->group(function () {
     Route::get('/unauthenticated', 'unauth')->name('unauthenticated');
 });
+
+Route::controller(Credit::class)->group(function () {
+    Route::get('/credits', 'credits');
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +97,7 @@ use App\Http\Controllers\API\User\DashboardController as UserDashboardController
 use App\Http\Controllers\API\User\PetController as UserPetController;
 use App\Http\Controllers\API\User\AppointmentController as UserAppointmentController;
 use App\Http\Controllers\API\User\Auth\LogoutController as UserLogoutController;
+use App\Http\Controllers\CreditController;
 
 
 // User Login Route

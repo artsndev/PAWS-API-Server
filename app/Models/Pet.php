@@ -44,4 +44,14 @@ class Pet extends Model
         return $this->hasMany(Appointment::class,'pet_id');
     }
 
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function queue()
+    {
+        return $this->hasOne(Queue::class,'pet_id');
+    }
+
 }
