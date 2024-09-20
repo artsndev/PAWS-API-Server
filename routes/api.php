@@ -22,7 +22,11 @@ use App\Http\Controllers\API\Vet\AppointmentController as VetAppointmentControll
 use App\Http\Controllers\API\Vet\ResultController as VetResultController;
 use App\Http\Controllers\API\Vet\UserController as VetUserController;
 use App\Http\Controllers\API\Vet\Auth\LogoutController as VetLogoutController;
+use App\Http\Controllers\API\Vet\PDFController as VetPDFController;
 
+Route::controller(VetPDFController::class)->group(function () {
+    Route::get('/download/{id}', 'download');
+});
 
 // Vet Login Route
 Route::controller(VetLoginController::class)->group(function () {
