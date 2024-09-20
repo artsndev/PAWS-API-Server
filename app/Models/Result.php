@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Schedule extends Model
+class Result extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -17,21 +16,14 @@ class Schedule extends Model
      */
     protected $fillable = [
         'veterinarian_id',
-        'schedule_time',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $dates = [
-        'deleted_at',
+        'appointment_id',
+        'physical_exam',
+        'treatment_plan',
     ];
 
     /**
      *
-     * Define the relationship between Doctor and Schedule models.
+     * Define the relationship between User and Appointment models.
      *
      */
     public function veterinarian()
@@ -41,11 +33,11 @@ class Schedule extends Model
 
     /**
      *
-     * Define the relationship between Doctor and Schedule models.
+     * Define the relationship between User and Appointment models.
      *
      */
     public function appointment()
     {
-        return $this->hasMany(Appointment::class,'schedule_id');
+        return $this->belongsTo(Appointment::class,'appointment_id');
     }
 }

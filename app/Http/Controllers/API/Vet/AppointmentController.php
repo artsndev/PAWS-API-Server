@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API\Vet;
 
-use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -12,7 +14,34 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $appointment = Appointment::with([
+                'schedule' => function ($query) {
+                    $query->withTrashed();
+                },
+                'user',
+                'pet',
+                'result'
+            ])->withTrashed()->where('veterinarian_id', Auth::user()->id)->latest()->get();
+            if(!$appointment) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Not Found',
+                ];
+                return response()->json($response, 403);
+            }
+            $response = [
+                'success' => true,
+                'data' => $appointment,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**

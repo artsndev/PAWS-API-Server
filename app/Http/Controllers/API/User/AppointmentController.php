@@ -47,7 +47,14 @@ class AppointmentController extends Controller
     public function index()
     {
         try {
-            $appointment = Appointment::with('veterinarian','schedule')->withTrashed()->where('user_id', Auth::user()->id)->latest()->get();
+            $appointment = Appointment::with([
+                'veterinarian',
+                'schedule' => function ($query) {
+                    $query->withTrashed();
+                },
+                'result',
+                'pet'
+            ])->withTrashed()->where('user_id', Auth::user()->id)->latest()->get();
             if(!$appointment) {
                 $response = [
                     'success' => false,

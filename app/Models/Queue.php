@@ -61,4 +61,14 @@ class Queue extends Model
     {
         return $this->belongsTo(Appointment::class,'appointment_id');
     }
+
+    /**
+     *
+     * Define the relationship between User and Appointment models.
+     *
+     */
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class,'pet_id');
+    }
 }
