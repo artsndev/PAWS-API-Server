@@ -43,6 +43,7 @@ Route::middleware(['auth:vet-api'])->group(function () {
     // Veterinarian Data Route
     Route::controller(VetDashboardController::class)->group(function () {
         Route::get('/vet/data', 'auth');
+        Route::get('/vet/count', 'index');
     });
     // Veterinarian Data Route
     Route::controller(VetScheduleController::class)->group(function () {
