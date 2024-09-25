@@ -28,7 +28,7 @@ class QueuingMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'On Process Mail',
+            subject: 'Appointment Confirmed!',
         );
     }
 
