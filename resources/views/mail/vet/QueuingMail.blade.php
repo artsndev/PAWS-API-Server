@@ -328,9 +328,9 @@
                                     <td class="content-cell">
                                         <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                                             <h1>Greetings, {{ $queuing->user->name }} </h1>
-                                            <p class="" style="font-size: 16px;">{{ __('Your appointment request is now On Queue.') }}</p>
+                                            <p class="" style="font-size: 16px;">{{ __('Your appointment request has been confirmed.') }}</p>
                                             {{-- <h1 class="text-center">{{ $client->queuing_number }} </h1> --}}
-                                            <p>{{ __('Thank you for using PAWSSIBLE Solutions Mobile app. 🚀') }}</p>
+                                            <p>{{ __('Thank you for using PAWSSIBLE Solutions Mobile app. 🐾') }}</p>
                                         </table>
                                         <table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                                             <tr>

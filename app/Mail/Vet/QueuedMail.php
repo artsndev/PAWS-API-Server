@@ -27,7 +27,7 @@ class QueuedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Queued Mail',
+            subject: 'Appointment Complete',
         );
     }
 
