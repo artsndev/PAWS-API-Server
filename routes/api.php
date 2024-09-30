@@ -120,6 +120,8 @@ Route::middleware(['auth:user-api'])->group(function () {
         Route::get('/user/pet', 'index');
         Route::post('/user/pet', 'store');
         Route::get('/user/pet/{id}', 'show');
+        Route::put('/user/pet/{id}', 'update');
+        Route::delete('/user/pet/{id}', 'destroy');
     });
     // Appointment Data Route
     Route::controller(UserAppointmentController::class)->group(function () {

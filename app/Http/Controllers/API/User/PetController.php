@@ -110,7 +110,50 @@ class PetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $pet = Pet::find($id);
+            if(!$pet) {
+                $data = [
+                    'message' => 'pet not found',
+                ];
+                return response()->json($data, 404);
+            }
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'breed' => 'required',
+                'species' => 'required',
+                'age' => 'required',
+                'sex' => 'required',
+                'color' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $data = [
+                    'success' => false,
+                    'error' => $validator->errors(),
+                ];
+                return response()->json($data, 200);
+            }
+            $pet->update([
+                'user_id' => Auth::user()->id,
+                'name' => $request->input('name'),
+                'breed' => $request->input('breed'),
+                'species' => $request->input('species'),
+                'age' => $request->input('age'),
+                'sex' => $request->input('sex'),
+                'color' => $request->input('color'),
+            ]);
+            $result = [
+                'success' => true,
+                'message' => 'Updated Successfully',
+                'data' => $pet,
+            ];
+            return response()->json($result, 200);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 
     /**
@@ -118,6 +161,27 @@ class PetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $pet = Pet::find($id);
+            if ($pet) {
+                $pet->delete();
+                $data = [
+                    'success' => true,
+                    'message' => 'pet was successfully destroyed.',
+                    'deleted_pet' => $pet,
+                ];
+                return response()->json($data, 202);
+            }
+            $data = [
+                'success' => false,
+                'message' => 'pets doesn\'t  Exists',
+            ];
+            return response()->json($data, 404);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 }
