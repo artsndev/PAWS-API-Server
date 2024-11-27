@@ -51,6 +51,12 @@ class PetController extends Controller
                 ];
                 return response()->json($response, 200);
             }
+            // Store the file itself on local storage.
+            if (request()->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $petAvatar = $avatar->getClientOriginalName();
+                $url = request()->file('avatar')->storeOnCloudinary('pet_avatar/tmp')->getSecurePath();
+            }
             $pet = Pet::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->input('name'),
