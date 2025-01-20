@@ -131,6 +131,8 @@ Route::middleware(['auth:user-api'])->group(function () {
         Route::get('/user/appointment', 'index');
         Route::post('/user/appointment', 'store');
         Route::get('/user/appointment/{id}', 'show');
+        Route::post('/user/appointment/{id}', 'update');
+        Route::delete('/user/appointment/{id}', 'destroy');
     });
     // Logout Route
     Route::controller(UserLogoutController::class)->group(function () {
