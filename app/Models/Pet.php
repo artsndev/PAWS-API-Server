@@ -16,6 +16,7 @@ class Pet extends Model
      */
     protected $fillable = [
         'user_id',
+        'avatar',
         'name',
         'breed',
         'species',

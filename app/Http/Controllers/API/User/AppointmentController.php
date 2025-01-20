@@ -171,7 +171,47 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $appointment = Appointment::find($id);
+            if(!$appointment) {
+                $data = [
+                    'message' => 'Appointment not found',
+                ];
+                return response()->json($data, 404);
+            }
+            $validator = Validator::make($request->all(), [
+                'schedule_id' => 'required|unique:appointments,schedule_id',
+                'purpose_of_appointment' => 'required',
+            ], [
+                'schedule_id.required' => 'This field is required. Please select a schedule first.',
+                'schedule_id.unique' => 'This schedule is already taken. Please select other.',
+            ]);
+            if ($validator->fails()) {
+                $response = [
+                    'success' => false,
+                    'errors' => $validator->errors(),
+                ];
+                return response()->json($response, 200);
+            }
+            $appointment->update([
+                'user_id' => Auth::user()->id,
+                'veterinarian_id' => $request->input('veterinarian_id'),
+                'pet_id' => $request->input('pet_id'),
+                'schedule_id' => $request->input('schedule_id'),
+                'purpose_of_appointment' => $request->input('purpose_of_appointment'),
+            ]);
+            $result = [
+                'success' => true,
+                'message' => 'Updated Successfully',
+                'data' => $appointment,
+            ];
+            return response()->json($result, 200);
+        } catch (\Exception $e) {
+            $errors = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($errors, 500);
+        }
     }
 
     /**
@@ -179,6 +219,28 @@ class AppointmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $appointment = Appointment::find($id);
+            if ($appointment) {
+                $appointment->delete();
+                $data = [
+                    'success' => true,
+                    'data' => $appointment,
+                    'message' => 'Appointment Successfully.',
+                ];
+                return response()->json($data, 200);
+            }
+            $response = [
+                'success' => false,
+                'message' => 'Appointment not found',
+            ];
+            return response()->json($response, 404);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 }

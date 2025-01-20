@@ -51,8 +51,15 @@ class PetController extends Controller
                 ];
                 return response()->json($response, 200);
             }
+            // Store the file itself on local storage.
+            if (request()->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $petAvatar = $avatar->getClientOriginalName();
+                $url = request()->file('avatar')->storeOnCloudinary('pet_avatar/tmp')->getSecurePath();
+            }
             $pet = Pet::create([
                 'user_id' => Auth::user()->id,
+                'avatar' => $url,
                 'name' => $request->input('name'),
                 'breed' => $request->input('breed'),
                 'species' => $request->input('species'),
@@ -183,5 +190,27 @@ class PetController extends Controller
             ];
             return response()->json($errors, 500);
         }
+    }
+
+    /**
+     * Store the files to the storage.
+     */
+    public function upload_pet_avatar(Request $request)
+    {
+        // $data = [
+        //     'message' => 'Hello'
+        // ];
+        // return response()->json($data, 200);
+        if (request()->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = $file->getClientOriginalName();
+            $url = request()->file('avatar')->storeOnCloudinary('pet_avatar/upload')->getSecurePath();
+            $content = [
+                'content' => $filename,
+                'url' => $url,
+            ];
+            return  response()->json($content, 404);
+        }
+        return '';
     }
 }

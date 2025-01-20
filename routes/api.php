@@ -122,6 +122,7 @@ Route::middleware(['auth:user-api'])->group(function () {
         Route::get('/user/pet/{id}', 'show');
         Route::post('/user/pet/{id}', 'update');
         Route::delete('/user/pet/{id}', 'destroy');
+        Route::post('/user/upload', 'upload_pet_avatar');
     });
     // Appointment Data Route
     Route::controller(UserAppointmentController::class)->group(function () {
@@ -130,6 +131,8 @@ Route::middleware(['auth:user-api'])->group(function () {
         Route::get('/user/appointment', 'index');
         Route::post('/user/appointment', 'store');
         Route::get('/user/appointment/{id}', 'show');
+        Route::post('/user/appointment/{id}', 'update');
+        Route::delete('/user/appointment/{id}', 'destroy');
     });
     // Logout Route
     Route::controller(UserLogoutController::class)->group(function () {

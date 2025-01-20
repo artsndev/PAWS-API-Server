@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 
 class PDFController extends Controller
 {
-    public function download(string $id) {
+    public function download(string $id)
+    {
         $appointment = Appointment::with([
             'schedule' => function ($query) {
                 $query->withTrashed();
